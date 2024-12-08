@@ -1,61 +1,54 @@
 package character.factory;
 
+import character.Difficulty;
 import character.Monster;
-import room.Room;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Random;
 
 public class MonsterFactory {
-    public static Monster createEasyMonster() {
-        Monster monsterFactoryEasy = new Monster();
+    public Monster createEasyMonster(Difficulty difficulty) {
         Monster spider = new Monster();
 
+        spider.setType("spider");
         spider.setHp(10);
         spider.setPower(1);
         spider.setDefence(1);
 
-        List<Monster> easyMonsters = new ArrayList<>();
-
-        easyMonsters.add(spider);
-        easyMonsters.add(spider);
-        easyMonsters.add(spider);
-
-        monsterFactoryEasy.setMonsters(easyMonsters);
-        return monsterFactoryEasy;
+        return spider;
     }
 
-    public static Monster createMediumMonster(){
-        Monster monsterFactoryMedium = new Monster();
+    public Monster createMediumMonster(Difficulty difficulty){
         Monster imp = new Monster();
 
+        imp.setType("imp");
         imp.setHp(50);
         imp.setPower(5);
         imp.setDefence(2);
 
-        List<Monster> mediumMonsters = new ArrayList<>();
-
-        mediumMonsters.add(imp);
-        mediumMonsters.add(imp);
-        mediumMonsters.add(imp);
-
-        monsterFactoryMedium.setMonsters(mediumMonsters);
-        return monsterFactoryMedium;
+        return imp;
     }
-    public static Monster createDifficultMonster(){
-        Monster monsterFactoryDifficult = new Monster();
+    public Monster createHardMonster(Difficulty difficulty){
         Monster demon = new Monster();
 
-        demon.setHp(100);
-        demon.setPower(10);
+        Random random = new Random();
+
+        demon.setType("DeweloperThisShit");
+        int demonHp = random.nextInt(99) + 1;
+
+        demon.setHp(demonHp);
+
+        if(demonHp < 50){
+            demon.setPower(10);
+        } else if(demonHp > 50){
+            demon.setPower(20);
+        } else if(demonHp > 90){
+            demon.setPower(30);
+        } else {
+            throw new RuntimeException("Cant create hardMonster = " + demonHp);
+        }
+
         demon.setDefence(3);
 
-        List<Monster> difficultMonsters = new ArrayList<>();
-
-        difficultMonsters.add(demon);
-        difficultMonsters.add(demon);
-
-        monsterFactoryDifficult.setMonsters(difficultMonsters);
-        return monsterFactoryDifficult;
+        return demon;
     }
 }

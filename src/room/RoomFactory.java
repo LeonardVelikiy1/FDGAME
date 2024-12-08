@@ -1,33 +1,42 @@
 package room;
 
+import character.Difficulty;
 import character.Monster;
 import character.factory.MonsterFactory;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+
+import static character.Difficulty.EASY;
+import static character.Difficulty.HARD;
+import static character.Difficulty.MEDIUM;
 
 public class RoomFactory {
-    public Room createRoom() {
+    public Room createRoom(Difficulty difficulty) {
         Room room1 = new Room();
-        Random random = new Random();
-
-        int roomHardness = random.nextInt(3) + 1;
-
         List<Monster> monsters = new ArrayList<>();
-        if(roomHardness == 1){
-            monsters.add(MonsterFactory.createEasyMonster());
-        } else if(roomHardness == 2){
-            monsters.add(MonsterFactory.createMediumMonster());
-        } else if(roomHardness == 3){
-            monsters.add(MonsterFactory.createDifficultMonster());
-        } else {
-            throw new RuntimeException("Cant create room = " + roomHardness);
+        MonsterFactory monsterFactory = new MonsterFactory();
+        switch (difficulty) {
+            case EASY:
+                monsters.add(monsterFactory.createEasyMonster(EASY));
+                break;
+            case MEDIUM:
+                monsters.add(monsterFactory.createMediumMonster(MEDIUM));
+                monsters.add(monsterFactory.createMediumMonster(MEDIUM));
+                monsters.add(monsterFactory.createEasyMonster(EASY));
+                monsters.add(monsterFactory.createEasyMonster(EASY));
+                break;
+            case HARD:
+                monsters.add(monsterFactory.createHardMonster(HARD));
+                monsters.add(monsterFactory.createHardMonster(EASY));
+                monsters.add(monsterFactory.createHardMonster(HARD));
+                monsters.add(monsterFactory.createHardMonster(EASY));
+                break;
+            default:throw new RuntimeException("Unknown room difficulty = " + difficulty);
         }
 
-
-        room1.setHardness(roomHardness);
         room1.setMonsters(monsters);
-        return room1;
+        room1.setDifficulty(difficulty);
+    return room1;
     }
 }
