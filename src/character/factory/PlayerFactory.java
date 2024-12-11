@@ -15,7 +15,7 @@ public class PlayerFactory {
                 player.setStrength(10);
                 break;
             case ("2") :
-                player.setHp(100);
+                player.setHp(101);
                 player.setIntelligence(10);
                 player.setDexterity(10);
                 player.setWisdom(5);
